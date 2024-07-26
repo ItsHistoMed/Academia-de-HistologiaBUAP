@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Músculo cardiaco-Departamento de Histología</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .header-container {
+            background-color: #800080;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 80%;
+            max-width: 1000px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .image-container {
+            background-color: white;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px; /* Espacio entre cada image-container */
+            max-width: 100px; /* Ancho máximo del contenedor */
+            overflow: hidden; /* Recorta cualquier contenido que se salga */
+        }
+        .image-container img {
+            max-width: 100px; /* Asegura que la imagen no sea más ancha que el contenedor */
+            height: 100px; /* Altura automática para mantener la proporción */
+            object-fit: cover; /* Ajusta la imagen manteniendo su relación de aspecto */
+            border-radius: 10px;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        .buttons a {
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #800080;
+            text-decoration: none; /* Quita el subrayado predeterminado de los enlaces */
+            text-align: center; /* Centra el texto en el botón */
+            display: inline-block; /* Hace que los enlaces se comporten como botones */
+        }
+        .buttons a:hover {
+            background-color: #f0f0f0;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            width: 80%;
+            max-width: 1000px;
+            margin: 20px 0;
+        }
+        .column {
+            background-color: white;
+            padding: 20px;
+            margin: 0 10px;
+            border-radius: 10px;
+            width: 20%; /* Ancho ajustado para la columna izquierda */
+            position: relative; /* Permitir posicionamiento relativo para cuadros de texto */
+        }
+        .laminillas-images img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        .nombre {
+            position: absolute;
+            background-color: #fdcae1;
+            padding: 1px;
+            border-radius: 10px;
+            cursor: move;
+            z-index: 100;
+            font-size: 12px;
+        }
+        .pdf-container {
+            width: 95%;
+            max-width: 1000px;
+            margin: 20px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .pdf-frame {
+            width: 100%;
+            height: 1000px; /* Puedes ajustar esta altura según tus necesidades */
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <div class="image-container">
+            <img src="240px-Escudobuappositivo2.png" alt="Imagen 1">
+        </div>
+        <div class="buttons">
+            <a href="index.html">Inicio</a>
+            <a href="Instructores.html">Instructores</a>
+            <a href="Nuestras redes.html">Nuestras redes</a>
+        </div>
+        <div class="image-container">
+            <img src="Logo a color.jpg" alt="Imagen 2">
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="column">
+            <h2>Estructuras</h2>
+            <p>Arrastra la estructura sobre la imagen correspondiente.</p>
+            <!-- Cuadros de texto movibles dentro de la columna izquierda -->
+
+            <div class="nombre" id="nombre1" style="top: 140px; left: 20px;">
+                <p>Núcleo</p>
+            </div>
+            <div class="nombre" id="nombre2" style="top: 210px; left: 20px;">
+                <p>Tejido Conectivo</p>
+            </div>
+            <div class="nombre" id="nombre3" style="top: 280px; left: 20px;">
+                <p>Región yuxtanuclear</p>
+            </div>
+            <div class="nombre" id="nombre5" style="top: 600px; left: 20px;">
+                <p>Núcleo</p>
+            </div>
+            <div class="nombre" id="nombre6" style="top: 670px; left: 20px;">
+                <p>Disco intercalar</p>
+            </div>
+            <div class="nombre" id="nombre7" style="top: 740px; left: 20px;">
+                <p>Célula binucleada</p>
+            </div>
+            <div class="nombre" id="nombre8" style="top: 810px; left: 20px;">
+                <p>Tejido conectivo</p>
+            </div>
+
+        </div>
+        <div class="column" style="flex: 1; max-width: calc(80% - 20px);">
+            <h2>Músculo cardiaco</h2>
+            <div class="laminillas-images">
+                <img src="Imagenes\Tejido muscular\Cardiaco\Imagen 1.jpg" alt="Imagen 1">
+            </div>
+            <div class="laminillas-images">
+                <img src="Imagenes/Tejido muscular\Cardiaco/Imagen 2.jpg" alt="Imagen 2">
+            </div>
+            
+<div class="pdf-container">
+        <iframe src="Material para las prácticas/Músculo Cardiaco.pdf" class="pdf-frame"></iframe>
+    </div>
+
+
+        </div>
+    </div>
+
+
+<script>
+    // Función para permitir arrastrar y soltar los cuadros de texto
+    function dragElement(elemento) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(elemento.id)) {
+            // Si se presiona el mouse dentro del cuadro de texto
+            document.getElementById(elemento.id).onmousedown = dragMouseDown;
+        } else {
+            // Si se presiona el mouse dentro del cuadro de texto
+            elemento.onmousedown = dragMouseDown;
+        }
+
+        function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // Obtener la posición inicial del cursor
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // Llamar a la función cuando se mueve el mouse
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // Calcular la nueva posición del cuadro de texto
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // Establecer la nueva posición del cuadro de texto
+            elemento.style.top = (elemento.offsetTop - pos2) + "px";
+            elemento.style.left = (elemento.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            // Detener el movimiento cuando se suelta el mouse
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
+    // Llamar a la función para cada cuadro de texto
+    dragElement(document.getElementById("nombre1"));
+    dragElement(document.getElementById("nombre2"));
+    dragElement(document.getElementById("nombre3"));
+    dragElement(document.getElementById("nombre4"));
+    dragElement(document.getElementById("nombre5"));
+    dragElement(document.getElementById("nombre6"));
+    dragElement(document.getElementById("nombre7"));
+    dragElement(document.getElementById("nombre8"));
+    dragElement(document.getElementById("nombre9"));
+
+
+</script>
+
+</body>
+</html>
