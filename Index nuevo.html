@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departamento de Histología</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a1b9a;
+            --secondary-color: #9c27b0;
+            --accent-color: #e91e63;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-light: #777777;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+            border-radius: 8px;
+            background-color: white;
+            padding: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-btn:hover {
+            background-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Mission/Vision/Gallery Cards */
+        .info-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            width: 100%;
+        }
+        
+        .gallery-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            margin-top: 30px;
+        }
+        
+        .info-card h2, .gallery-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+        
+        /* Gallery Styles */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .gallery-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .gallery-slide.active {
+            opacity: 1;
+        }
+        
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-slide img:hover {
+            transform: scale(1.02);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Navegación mejorada */
+        .gallery-nav-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-nav {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            transition: transform 0.3s ease;
+            padding: 0 30px; /* Espacio para las flechas */
+        }
+
+        .gallery-nav-wrapper {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            border: none;
+        }
+
+        .nav-arrow.left {
+            left: 0;
+        }
+
+        .nav-arrow.right {
+            right: 0;
+        }
+
+        .nav-arrow:hover {
+            background-color: var(--accent-color);
+        }
+
+        .gallery-dot {
+            flex: 0 0 12px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .gallery-dot.active {
+            background-color: var(--accent-color);
+        }
+        
+        /* Index Panel */
+        .index-panel {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .index-panel h2 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .index-list {
+            list-style: none;
+        }
+        
+        .index-item {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .index-item > a {
+            display: block;
+            padding: 12px 15px;
+            background-color: #f8e3ff;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .index-item > a:hover {
+            background-color: #f0c8ff;
+            transform: translateX(5px);
+        }
+        
+        .index-item > a i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .dropdown-menu {
+            display: none;
+            list-style: none;
+            padding-left: 20px;
+            margin-top: 5px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+            border-left: 2px solid #e0e0e0;
+            margin-bottom: 5px;
+        }
+        
+        .dropdown-menu a:hover {
+            color: var(--primary-color);
+            border-left-color: var(--accent-color);
+            background-color: #f5f5f5;
+        }
+        
+        .index-item.active .dropdown-menu {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .gallery-container {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .gallery-container {
+                height: 300px;
+            }
+            
+            .nav-arrow {
+                width: 20px;
+                height: 20px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="240px-Escudobuappositivo2.png" alt="Logo BUAP" class="logo">
+                <h1 class="title">Departamento de Histología</h1>
+                <img src="Logo a color.jpg" alt="Logo Departamento" class="logo">
+            </div>
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="Instructores.html" class="nav-btn">
+                    <i class="fas fa-chalkboard-teacher"></i> Instructores
+                </a>
+                <a href="Nuestras redes.html" class="nav-btn">
+                    <i class="fas fa-share-alt"></i> Nuestras redes
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="info-card">
+                    <h2><i class="fas fa-bullseye"></i> Misión</h2>
+                    <p>Proporcionar una plataforma de apoyo y recursos para los estudiantes de histología, facilitando el aprendizaje a través de talleres, seminarios y actividades prácticas. Nos comprometemos a fomentar un entorno colaborativo y enriquecedor que promueva el crecimiento académico, el desarrollo profesional y la innovación en la investigación histológica.</p>
+                </aside>
+                
+                <section class="index-panel">
+                    <h2><i class="fas fa-book-open"></i> Índice</h2>
+                    <ul class="index-list">
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-microscope"></i> Técnica Histológica y microscopia</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Técnica histológica.html">Tecnica Histologica</a></li>
+                                <li><a href="Microscopia.html">Microscopia</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-layer-group"></i> Epitelios de revestimiento</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Piel.html">Piel</a></li>
+                                <li><a href="Pulmón.html">Pulmón</a></li>
+                                <li><a href="Riñón.html">Riñón</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-seedling"></i> Tejido glandular</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Glándula mamaria.html">Glándula mamaria</a></li>
+                                <li><a href="Glándula Suprarrenal.html">Glándula Suprarrenal</a></li>
+                                <li><a href="Tiroides.html">Tiroides</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-network-wired"></i> Tejido conectivo</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Cartílago.html">Cartílago</a></li>
+                                <li><a href="Cordón umbilical.html">Cordón umbilical</a></li>
+                                <li><a href="Hueso.html">Hueso</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-tint"></i> Tejido Sanguíneo</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Tejido sanguíneo.html">Tejido sanguíneo</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-dumbbell"></i> Tejido Muscular</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Músculo esquelético.html">Músculo esquelético</a></li>
+                                <li><a href="Músculo cardiaco.html">Músculo cardiaco</a></li>
+                                <li><a href="Músculo liso.html">Músculo liso</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-brain"></i> Tejido Nervioso</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Cerebro.html">Cerebro</a></li>
+                                <li><a href="Cerebelo.html">Cerebelo</a></li>
+                                <li><a href="Nervio periférico.html">Nervio periférico</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-utensils"></i> Tracto digestivo 1</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Esófago.html">Esófago</a></li>
+                                <li><a href="Estómago.html">Estómago</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-utensils"></i> Tracto digestivo 2</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Intestino Delgado.html">Intestino delgado</a></li>
+                                <li><a href="Intestino Grueso.html">Intestino Grueso</a></li>
+                                <li><a href="Apéndice.html">Apéndice</a></li>
+                            </ul>
+                        </li>
+                        <li class="index-item">
+                            <a href="#"><i class="fas fa-leaf"></i> Anexos del tubo digestivo</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="Hígado.html">Hígado</a></li>
+                                <li><a href="Páncreas.html">Páncreas</a></li>
+                                <li><a href="Vesícula biliar.html">Vesícula biliar</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                
+                <aside>
+                    <div class="info-card">
+                        <h2><i class="fas fa-eye"></i> Visión</h2>
+                        <p>Ser una comunidad líder en la promoción y avance del conocimiento de la histología, inspirando a los estudiantes a alcanzar la excelencia académica y profesional.</p>
+                    </div>
+                    
+                    <div class="gallery-card">
+                        <h2><i class="fas fa-images"></i> Galería</h2>
+                        <div class="gallery-container" id="galleryContainer">
+                            <!-- Las imágenes se insertarán dinámicamente con JavaScript -->
+                        </div>
+                        <div class="gallery-nav-wrapper" id="galleryNavWrapper">
+                            <!-- La navegación se insertará dinámicamente con JavaScript -->
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Manejar el despliegue de los menús desplegables
+            const indexItems = document.querySelectorAll('.index-item');
+            
+            indexItems.forEach(item => {
+                const link = item.querySelector('a');
+                
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Cerrar todos los demás menús
+                    indexItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Alternar el menú actual
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // Cerrar menús al hacer clic fuera
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.index-item')) {
+                    indexItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                }
+            });
+            
+            // Configuración de la galería
+            const galleryImages = [
+                {
+                    src: "Imagenes/Epitelios/Piel/Piel Delgada.jpg",
+                    caption: "Piel Delgada",
+                    link: "Piel.html"
+                },
+                {
+                    src: "Imagenes/Epitelios/Piel/Piel Gruesa.jpg",
+                    caption: "Piel Gruesa",
+                    link: "Piel.html"
+                },
+                {
+                    src: "Imagenes/Epitelios/Pulmón/Bronquio.jpg",
+                    caption: "Bronquio",
+                    link: "Pulmón.html"
+                },
+                {
+                    src: "Imagenes/Epitelios/Pulmón/Macrófago alveolar.jpg",
+                    caption: "Macrófago alveolar",
+                    link: "Pulmón.html"
+                },
+                {
+                    src: "Imagenes/Epitelios/Riñón/Imagen 1.jpg",
+                    caption: "Riñón - Imagen 1",
+                    link: "Riñón.html"
+                },
+                {
+                    src: "Imagenes/Epitelios/Riñón/Imagen 2.jpg",
+                    caption: "Riñón - Imagen 2",
+                    link: "Riñón.html"
+                },
+                {
+                    src: "Imagenes/Glándulas/Mamaria/Imagen 1.jpg",
+                    caption: "Glándula Mamaria - Imagen 1",
+                    link: "Glándula mamaria.html"
+                },
+                {
+                    src: "Imagenes/Glándulas/Mamaria/Imagen 2.jpg",
+                    caption: "Glándula Mamaria - Imagen 2",
+                    link: "Glándula mamaria.html"
+                },
+                {
+                    src: "Imagenes/Glándulas/Suprarrenal/Imagen 1.jpg",
+                    caption: "Glándula Suprarrenal - Imagen 1",
+                    link: "Glándula Suprarrenal.html"
+                },
+                {
+                    src: "Imagenes/Glándulas/Suprarrenal/Imagen 2.jpg",
+                    caption: "Glándula Suprarrenal - Imagen 2",
+                    link: "Glándula Suprarrenal.html"
+                },
+                {
+                    src: "Imagenes/Glándulas/Tiroides/Imagen 1.jpg",
+                    caption: "Tiroides - Imagen 1",
+                    link: "Tiroides.html"
+                },
+                {
+                    src: "Imagenes/Glándulas/Tiroides/Imagen 2.jpg",
+                    caption: "Tiroides - Imagen 2",
+                    link: "Tiroides.html"
+                },
+                {
+                    src: "Imagenes/Tejido conectivo/Cartílago/Imagen 1.jpg",
+                    caption: "Cartílago - Imagen 1",
+                    link: "Cartílago.html"
+                },
+                {
+                    src: "Imagenes/Tejido conectivo/Cartílago/Imagen 2.jpg",
+                    caption: "Cartílago - Imagen 2",
+                    link: "Cartílago.html"
+                },
+                {
+                    src: "Imagenes/Tejido conectivo/Cordón umbilical/Imagen 1.jpg",
+                    caption: "Cordón umbilical - Imagen 1",
+                    link: "Cordón umbilical.html"
+                },
+                {
+                    src: "Imagenes/Tejido conectivo/Cordón umbilical/Imagen 2.jpg",
+                    caption: "Cordón umbilical - Imagen 2",
+                    link: "Cordón umbilical.html"
+                },
+                {
+                    src: "Imagenes/Tejido conectivo/Hueso/Imagen 1.jpg",
+                    caption: "Hueso - Imagen 1",
+                    link: "Hueso.html"
+                },
+                {
+                    src: "Imagenes/Tejido conectivo/Hueso/Imagen 2.jpg",
+                    caption: "Hueso - Imagen 2",
+                    link: "Hueso.html"
+                },
+                {
+                    src: "Imagenes/Tejido muscular/Cardiaco/Imagen 1.jpg",
+                    caption: "Músculo Cardiaco - Imagen 1",
+                    link: "Músculo cardiaco.html"
+                },
+                {
+                    src: "Imagenes/Tejido muscular/Cardiaco/Imagen 2.jpg",
+                    caption: "Músculo Cardiaco - Imagen 2",
+                    link: "Músculo cardiaco.html"
+                },
+                {
+                    src: "Imagenes/Tejido muscular/Esquelético/Imagen 1.jpg",
+                    caption: "Músculo Esquelético - Imagen 1",
+                    link: "Músculo esquelético.html"
+                },
+                {
+                    src: "Imagenes/Tejido muscular/Esquelético/Imagen 2.jpg",
+                    caption: "Músculo Esquelético - Imagen 2",
+                    link: "Músculo esquelético.html"
+                },
+                {
+                    src: "Imagenes/Tejido muscular/Liso/Imagen 1.jpg",
+                    caption: "Músculo Liso - Imagen 1",
+                    link: "Músculo liso.html"
+                },
+                {
+                    src: "Imagenes/Tejido muscular/Liso/Imagen 2.jpg",
+                    caption: "Músculo Liso - Imagen 2",
+                    link: "Músculo liso.html"
+                },
+                {
+                    src: "Imagenes/Tejido nervioso/Cerebelo/Imagen 1.jpg",
+                    caption: "Cerebelo - Imagen 1",
+                    link: "Cerebelo.html"
+                },
+                {
+                    src: "Imagenes/Tejido nervioso/Cerebelo/Imagen 2.jpg",
+                    caption: "Cerebelo - Imagen 2",
+                    link: "Cerebelo.html"
+                },
+                {
+                    src: "Imagenes/Tejido nervioso/Cerebro/Imagen 1.jpg",
+                    caption: "Cerebro - Imagen 1",
+                    link: "Cerebro.html"
+                },
+                {
+                    src: "Imagenes/Tejido nervioso/Cerebro/Imagen 2.jpg",
+                    caption: "Cerebro - Imagen 2",
+                    link: "Cerebro.html"
+                },
+                {
+                    src: "Imagenes/Tejido nervioso/Nervio periférico/Imagen 1.jpg",
+                    caption: "Nervio periférico - Imagen 1",
+                    link: "Nervio periférico.html"
+                },
+                {
+                    src: "Imagenes/Tejido nervioso/Nervio periférico/Imagen 2.jpg",
+                    caption: "Nervio periférico - Imagen 2",
+                    link: "Nervio periférico.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/Apéndice/Imagen 1.jpg",
+                    caption: "Apéndice - Imagen 1",
+                    link: "Apéndice.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/Apéndice/Imagen 2.jpg",
+                    caption: "Apéndice - Imagen 2",
+                    link: "Apéndice.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/Esófago/Imagen 1.jpg",
+                    caption: "Esófago - Imagen 1",
+                    link: "Esófago.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/Esófago/Imagen 2.jpg",
+                    caption: "Esófago - Imagen 2",
+                    link: "Esófago.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/Estómago/Imagen 1.jpg",
+                    caption: "Estómago - Imagen 1",
+                    link: "Estómago.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/Estómago/Imagen 2.jpg",
+                    caption: "Estómago - Imagen 2",
+                    link: "Estómago.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/ID/Imagen 1.jpg",
+                    caption: "Intestino Delgado - Imagen 1",
+                    link: "Intestino Delgado.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/ID/Imagen 2.jpg",
+                    caption: "Intestino Delgado - Imagen 2",
+                    link: "Intestino Delgado.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/IG/Imagen 1.jpg",
+                    caption: "Intestino Grueso - Imagen 1",
+                    link: "Intestino Grueso.html"
+                },
+                {
+                    src: "Imagenes/Aparato digestivo/IG/Imagen 2.jpg",
+                    caption: "Intestino Grueso - Imagen 2",
+                    link: "Intestino Grueso.html"
+                },
+                {
+                    src: "Imagenes/Anexos del tubo digestivo/Hígado/Imagen 1.jpg",
+                    caption: "Hígado - Imagen 1",
+                    link: "Hígado.html"
+                },
+                {
+                    src: "Imagenes/Anexos del tubo digestivo/Hígado/Imagen 2.jpg",
+                    caption: "Hígado - Imagen 2",
+                    link: "Hígado.html"
+                },
+                {
+                    src: "Imagenes/Anexos del tubo digestivo/Páncreas/Imagen 1.jpg",
+                    caption: "Páncreas - Imagen 1",
+                    link: "Páncreas.html"
+                },
+                {
+                    src: "Imagenes/Anexos del tubo digestivo/Páncreas/Imagen 2.jpg",
+                    caption: "Páncreas - Imagen 2",
+                    link: "Páncreas.html"
+                },
+                {
+                    src: "Imagenes/Anexos del tubo digestivo/Vesícula biliar/Imagen 1.jpg",
+                    caption: "Vesícula biliar - Imagen 1",
+                    link: "Vesícula biliar.html"
+                },
+                {
+                    src: "Imagenes/Anexos del tubo digestivo/Vesícula biliar/Imagen 2.jpg",
+                    caption: "Vesícula biliar - Imagen 2",
+                    link: "Vesícula biliar.html"
+                }
+            ];
+            
+            const galleryContainer = document.getElementById('galleryContainer');
+            const galleryNavWrapper = document.getElementById('galleryNavWrapper');
+            let currentSlide = 0;
+            const visibleDots = 5; // Número de puntos visibles a cada lado
+
+            // Crear slides
+            galleryImages.forEach((image, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'gallery-slide';
+                if (index === 0) slide.classList.add('active');
+                
+                const img = document.createElement('img');
+                img.src = image.src;
+                img.alt = image.caption;
+                
+                const caption = document.createElement('div');
+                caption.className = 'gallery-caption';
+                caption.textContent = image.caption;
+                
+                img.addEventListener('click', function() {
+                    window.location.href = image.link;
+                });
+                
+                slide.appendChild(img);
+                slide.appendChild(caption);
+                galleryContainer.appendChild(slide);
+            });
+
+            // Crear navegación de puntos
+            const navContainer = document.createElement('div');
+            navContainer.className = 'gallery-nav-container';
+            
+            const galleryNav = document.createElement('div');
+            galleryNav.className = 'gallery-nav';
+            galleryNav.id = 'galleryNav';
+            
+            navContainer.appendChild(galleryNav);
+            
+            // Flechas de navegación
+            const leftArrow = document.createElement('button');
+            leftArrow.className = 'nav-arrow left';
+            leftArrow.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            leftArrow.addEventListener('click', function() {
+                const prevIndex = (currentSlide - 1 + galleryImages.length) % galleryImages.length;
+                goToSlide(prevIndex);
+            });
+
+            const rightArrow = document.createElement('button');
+            rightArrow.className = 'nav-arrow right';
+            rightArrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            rightArrow.addEventListener('click', function() {
+                const nextIndex = (currentSlide + 1) % galleryImages.length;
+                goToSlide(nextIndex);
+            });
+
+            galleryNavWrapper.appendChild(leftArrow);
+            galleryNavWrapper.appendChild(navContainer);
+            galleryNavWrapper.appendChild(rightArrow);
+
+            // Función para actualizar la navegación de puntos
+            function updateDotNavigation() {
+                galleryNav.innerHTML = '';
+                
+                // Calcular el rango de puntos a mostrar
+                let startDot = Math.max(0, currentSlide - visibleDots);
+                let endDot = Math.min(galleryImages.length - 1, currentSlide + visibleDots);
+                
+                // Ajustar para mostrar siempre el mismo número de puntos si es posible
+                if (currentSlide - startDot < visibleDots) {
+                    endDot = Math.min(galleryImages.length - 1, endDot + (visibleDots - (currentSlide - startDot)));
+                }
+                if (endDot - currentSlide < visibleDots) {
+                    startDot = Math.max(0, startDot - (visibleDots - (endDot - currentSlide)));
+                }
+                
+                // Crear puntos de navegación
+                for (let i = startDot; i <= endDot; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'gallery-dot';
+                    if (i === currentSlide) dot.classList.add('active');
+                    
+                    dot.addEventListener('click', function() {
+                        goToSlide(i);
+                    });
+                    
+                    galleryNav.appendChild(dot);
+                }
+            }
+
+            // Función para cambiar de slide
+            function goToSlide(index) {
+                const slides = document.querySelectorAll('.gallery-slide');
+                slides[currentSlide].classList.remove('active');
+                
+                currentSlide = index;
+                slides[currentSlide].classList.add('active');
+                
+                updateDotNavigation();
+            }
+
+            // Inicializar navegación
+            updateDotNavigation();
+
+            // Cambio automático de slides
+            let slideInterval = setInterval(nextSlide, 5000);
+            
+            function nextSlide() {
+                const nextIndex = (currentSlide + 1) % galleryImages.length;
+                goToSlide(nextIndex);
+            }
+            
+            // Pausar el carrusel cuando el mouse está sobre la galería
+            galleryContainer.addEventListener('mouseenter', function() {
+                clearInterval(slideInterval);
+            });
+            
+            galleryContainer.addEventListener('mouseleave', function() {
+                slideInterval = setInterval(nextSlide, 5000);
+            });
+            
+            // Navegación por gestos (clic izquierdo/derecho)
+            let startX = 0;
+            
+            galleryContainer.addEventListener('mousedown', function(e) {
+                startX = e.clientX;
+            });
+            
+            galleryContainer.addEventListener('mouseup', function(e) {
+                const endX = e.clientX;
+                const threshold = 50;
+                
+                if (startX - endX > threshold) {
+                    nextSlide();
+                } else if (endX - startX > threshold) {
+                    const prevIndex = (currentSlide - 1 + galleryImages.length) % galleryImages.length;
+                    goToSlide(prevIndex);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
