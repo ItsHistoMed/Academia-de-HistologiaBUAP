@@ -3,230 +3,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nervio periférico-Departamento de Histología</title>
+    <title>Nervio periférico - Departamento de Histología</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #6a1b9a;
+            --secondary-color: #9c27b0;
+            --accent-color: #e91e63;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-light: #777777;
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
         }
-        .header-container {
-            background-color: #800080;
-            padding: 20px;
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            width: 80%;
-            max-width: 1000px;
-            border-radius: 10px;
-            margin-top: 20px;
+            align-items: center;
+            flex-wrap: wrap;
         }
-        .image-container {
-            background-color: white;
-            padding: 10px;
-            border-radius: 10px;
+        
+        .logo-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-bottom: 20px; /* Espacio entre cada image-container */
-            max-width: 100px; /* Ancho máximo del contenedor */
-            overflow: hidden; /* Recorta cualquier contenido que se salga */
-        }
-        .image-container img {
-            max-width: 100px; /* Asegura que la imagen no sea más ancha que el contenedor */
-            height: 100px; /* Altura automática para mantener la proporción */
-            object-fit: cover; /* Ajusta la imagen manteniendo su relación de aspecto */
-            border-radius: 10px;
-        }
-        .buttons {
-            display: flex;
             gap: 20px;
         }
-        .buttons a {
-            padding: 10px 20px;
+        
+        .logo {
+            height: 80px;
+            width: auto;
+            border-radius: 8px;
             background-color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            color: #800080;
-            text-decoration: none; /* Quita el subrayado predeterminado de los enlaces */
-            text-align: center; /* Centra el texto en el botón */
-            display: inline-block; /* Hace que los enlaces se comporten como botones */
+            padding: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        .buttons a:hover {
-            background-color: #f0f0f0;
+        
+        .title {
+            font-size: 1.8rem;
+            font-weight: 700;
         }
-        .main-container {
+        
+        .nav-buttons {
             display: flex;
-            justify-content: center;
-            width: 80%;
-            max-width: 1000px;
-            margin: 20px 0;
+            gap: 15px;
         }
-        .column {
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: var(--primary-color);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-btn:hover {
             background-color: white;
-            padding: 20px;
-            margin: 0 10px;
-            border-radius: 10px;
-            width: 20%; /* Ancho ajustado para la columna izquierda */
-            position: relative; /* Permitir posicionamiento relativo para cuadros de texto */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
-        .laminillas-images img {
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Structures Panel */
+        .structures-panel {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+        
+        .panel-description {
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        
+        .structure-item {
+            background-color: #f8e3ff;
+            border-left: 4px solid var(--accent-color);
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-radius: 0 6px 6px 0;
+            cursor: grab;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .structure-item:hover {
+            background-color: #f0c8ff;
+            transform: translateX(5px);
+        }
+        
+        /* Images Panel */
+        .images-panel {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .image-container {
+            margin-bottom: 30px;
+        }
+        
+        .image-title {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .histo-image {
             width: 100%;
-            height: auto;
-            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            border: 1px solid #eee;
         }
-        .nombre {
-            position: absolute;
-            background-color: #fdcae1;
-            padding: 1px;
-            border-radius: 10px;
-            cursor: move;
-            z-index: 100;
-            font-size: 12px;
+        
+        /* PDF Viewer */
+        .pdf-viewer {
+            margin-top: 40px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .pdf-container {
-            width: 95%;
-            max-width: 1000px;
-            margin: 20px 0;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
+        
+        .pdf-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        
         .pdf-frame {
             width: 100%;
-            height: 1000px; /* Puedes ajustar esta altura según tus necesidades */
+            height: 700px;
             border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Draggable Labels */
+        .draggable-label {
+            position: absolute;
+            background-color: rgba(233, 30, 99, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: move;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            max-width: 150px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        
+        .draggable-label:hover {
+            background-color: rgba(233, 30, 99, 1);
+            transform: scale(1.05);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header-container">
-        <div class="image-container">
-            <img src="240px-Escudobuappositivo2.png" alt="Imagen 1">
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="240px-Escudobuappositivo2.png" alt="Logo BUAP" class="logo">
+                <h1 class="title">Departamento de Histología</h1>
+                <img src="Logo a color.jpg" alt="Logo Departamento" class="logo">
+            </div>
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-btn">
+                    <i class="fas fa-home"></i> Inicio
+                </a>
+                <a href="Instructores.html" class="nav-btn">
+                    <i class="fas fa-chalkboard-teacher"></i> Instructores
+                </a>
+                <a href="Nuestras redes.html" class="nav-btn">
+                    <i class="fas fa-share-alt"></i> Nuestras redes
+                </a>
+            </div>
         </div>
-        <div class="buttons">
-            <a href="index.html">Inicio</a>
-            <a href="Instructores.html">Instructores</a>
-            <a href="Nuestras redes.html">Nuestras redes</a>
-        </div>
-        <div class="image-container">
-            <img src="Logo a color.jpg" alt="Imagen 2">
-        </div>
-    </div>
-    <div class="main-container">
-        <div class="column">
-            <h2>Estructuras</h2>
-            <p>Arrastra la estructura sobre la imagen correspondiente.</p>
-            <!-- Cuadros de texto movibles dentro de la columna izquierda -->
-
-            <div class="nombre" id="nombre1" style="top: 140px; left: 20px;">
-                <p>Axones</p>
-            </div>
-            <div class="nombre" id="nombre2" style="top: 210px; left: 20px;">
-                <p>Célula de Schwann</p>
-            </div>
-            <div class="nombre" id="nombre3" style="top: 280px; left: 20px;">
-                <p>Perineuro</p>
-            </div>
-            <div class="nombre" id="nombre4" style="top: 350px; left: 20px;">
-                <p>Tejido adiposo</p>
-            </div>
-            <div class="nombre" id="nombre5" style="top: 600px; left: 20px;">
-                <p>Haz nerviso</p>
-            </div>
-            <div class="nombre" id="nombre6" style="top: 670px; left: 20px;">
-                <p>Células de Schwann</p>
-            </div>
-            <div class="nombre" id="nombre7" style="top: 740px; left: 20px;">
-                <p>Epineuro</p>
-            </div>
-            <div class="nombre" id="nombre8" style="top: 810px; left: 20px;">
-                <p>Perineuro</p>
-            </div>
-
-        </div>
-        <div class="column" style="flex: 1; max-width: calc(80% - 20px);">
-            <h2>Nervio periférico</h2>
-            <div class="laminillas-images">
-                <img src="Imagenes\Tejido nervioso\Nervio periférico\Imagen 1.jpg" alt="Imagen 1">
-            </div>
-            <div class="laminillas-images">
-                <img src="Imagenes/Tejido nervioso\Nervio periférico/Imagen 2.jpg" alt="Imagen 2">
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <div class="content-grid">
+                <aside class="structures-panel">
+                    <h2 class="panel-title">Estructuras</h2>
+                    <p class="panel-description">Arrastra cada estructura sobre la imagen correspondiente para identificarlas.</p>
+                    
+                    <div class="structure-item" id="structure1" draggable="true">
+                        Axones
+                    </div>
+                    <div class="structure-item" id="structure2" draggable="true">
+                        Tejido Conectivo
+                    </div>
+                    <div class="structure-item" id="structure3" draggable="true">
+                        Célula de Schwann
+                    </div>
+                    <div class="structure-item" id="structure4" draggable="true">
+                        Perineuro
+                    </div>
+                    <div class="structure-item" id="structure5" draggable="true">
+                        Tejido adiposo
+                    </div>
+                    <div class="structure-item" id="structure6" draggable="true">
+                       Haz nervioso
+                    </div>
+                    <div class="structure-item" id="structure7" draggable="true">
+                       Células de Schwann
+                    </div>
+                    <div class="structure-item" id="structure8" draggable="true">
+                       Epineuro
+                    </div>
+                    <div class="structure-item" id="structure9" draggable="true">
+                       Perineuro
+                    </div>
+                </aside>
+                
+                <section class="images-panel">
+                    <h2 class="panel-title">
+                        <i class="fas fa-microscope"></i> Nervio periférico
+                    </h2>
+                    
+                    <div class="image-container">
+                        <h3 class="image-title">
+                            <i class="fas fa-image"></i> Imagen 1
+                        </h3>
+                        <div style="position: relative;">
+                            <img src="Imagenes\Tejido nervioso\Nervio periférico\Imagen 1.jpg" alt="Imagen 1" class="histo-image">
+                            <!-- Aquí se agregarán las etiquetas arrastrables dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <div class="image-container">
+                        <h3 class="image-title">
+                            <i class="fas fa-image"></i> Imagen 2
+                        </h3>
+                        <div style="position: relative;">
+                            <img src="Imagenes/Tejido nervioso\Nervio periférico/Imagen 2.jpg" alt="Imagen 2" class="histo-image">
+                            <!-- Aquí se agregarán las etiquetas arrastrables dinámicamente -->
+                        </div>
+                    </div>
+                </section>
             </div>
             
-<div class="pdf-container">
-        <iframe src="Material para las prácticas/Nervio periférico.pdf" class="pdf-frame"></iframe>
-    </div>
-
-
+            <div class="pdf-viewer">
+                <h2 class="pdf-title">
+                    <i class="fas fa-file-pdf"></i> Material de Prácticas
+                </h2>
+                <iframe src="Material para las prácticas/Nervio periférico.pdf" class="pdf-frame"></iframe>
+            </div>
         </div>
-    </div>
+    </main>
 
-
-<script>
-    // Función para permitir arrastrar y soltar los cuadros de texto
-    function dragElement(elemento) {
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        if (document.getElementById(elemento.id)) {
-            // Si se presiona el mouse dentro del cuadro de texto
-            document.getElementById(elemento.id).onmousedown = dragMouseDown;
-        } else {
-            // Si se presiona el mouse dentro del cuadro de texto
-            elemento.onmousedown = dragMouseDown;
-        }
-
-        function dragMouseDown(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // Obtener la posición inicial del cursor
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            // Llamar a la función cuando se mueve el mouse
-            document.onmousemove = elementDrag;
-        }
-
-        function elementDrag(e) {
-            e = e || window.event;
-            e.preventDefault();
-            // Calcular la nueva posición del cuadro de texto
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            // Establecer la nueva posición del cuadro de texto
-            elemento.style.top = (elemento.offsetTop - pos2) + "px";
-            elemento.style.left = (elemento.offsetLeft - pos1) + "px";
-        }
-
-        function closeDragElement() {
-            // Detener el movimiento cuando se suelta el mouse
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
-    }
-
-    // Llamar a la función para cada cuadro de texto
-    dragElement(document.getElementById("nombre1"));
-    dragElement(document.getElementById("nombre2"));
-    dragElement(document.getElementById("nombre3"));
-    dragElement(document.getElementById("nombre4"));
-    dragElement(document.getElementById("nombre5"));
-    dragElement(document.getElementById("nombre6"));
-    dragElement(document.getElementById("nombre7"));
-    dragElement(document.getElementById("nombre8"));
-    dragElement(document.getElementById("nombre9"));
-
-
-</script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos arrastrables
+            const structures = document.querySelectorAll('.structure-item');
+            const imageContainers = document.querySelectorAll('.image-container > div');
+            
+            // Crear clones arrastrables
+            structures.forEach(structure => {
+                structure.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.id);
+                    setTimeout(() => this.style.opacity = '0.4', 0);
+                });
+                
+                structure.addEventListener('dragend', function() {
+                    this.style.opacity = '1';
+                });
+            });
+            
+            // Zonas de destino para soltar
+            imageContainers.forEach(container => {
+                container.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = 'rgba(233, 30, 99, 0.1)';
+                });
+                
+                container.addEventListener('dragleave', function() {
+                    this.style.backgroundColor = '';
+                });
+                
+                container.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.backgroundColor = '';
+                    
+                    const id = e.dataTransfer.getData('text/plain');
+                    const draggedElement = document.getElementById(id);
+                    const text = draggedElement.textContent;
+                    
+                    // Crear etiqueta
+                    const label = document.createElement('div');
+                    label.className = 'draggable-label';
+                    label.textContent = text;
+                    
+                    // Posición aleatoria dentro del contenedor
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    label.style.left = `${x}px`;
+                    label.style.top = `${y}px`;
+                    
+                    // Hacer la etiqueta arrastrable
+                    makeDraggable(label);
+                    
+                    this.appendChild(label);
+                });
+            });
+            
+            // Función para hacer elementos arrastrables
+            function makeDraggable(element) {
+                let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+                
+                element.onmousedown = dragMouseDown;
+                
+                function dragMouseDown(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    
+                    // Obtener posición inicial
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    
+                    document.onmouseup = closeDragElement;
+                    document.onmousemove = elementDrag;
+                }
+                
+                function elementDrag(e) {
+                    e = e || window.event;
+                    e.preventDefault();
+                    
+                    // Calcular nueva posición
+                    pos1 = pos3 - e.clientX;
+                    pos2 = pos4 - e.clientY;
+                    pos3 = e.clientX;
+                    pos4 = e.clientY;
+                    
+                    // Establecer nueva posición
+                    element.style.top = (element.offsetTop - pos2) + "px";
+                    element.style.left = (element.offsetLeft - pos1) + "px";
+                }
+                
+                function closeDragElement() {
+                    // Detener movimiento al soltar
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+            }
+            
+            // Permitir eliminar etiquetas con doble click
+            document.addEventListener('dblclick', function(e) {
+                if (e.target.classList.contains('draggable-label')) {
+                    e.target.remove();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
